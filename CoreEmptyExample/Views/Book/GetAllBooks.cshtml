@@ -7,31 +7,68 @@
 
 <h1 style="text-align:center;">Book List</h1>
 
-<div class="container">
-    @foreach(var item in Model)
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Author</th>
-                            <th>Description</th>
-                            <th>Pages</th>
-                            <th>Quantity</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>@item.Author</td>
-                        <td>@item.Description</td>
-                        <td>@item.Pages</td>
-                        <td>@item.Quantity</td>
-                        <td><button class="btn btn-primary">Update</button></td>
-                        <td><button class="btn btn-primary">Delete</button></td>
-                    </tr>
-                </table>
-            }
+<div class="container" style="width:90%; margin-top:1%">
+    @if (ViewBag.CreateMsg)
+    {
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Congratulations!</strong> New book successfully added!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    @if (ViewBag.DeleteMsg)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Book Successfully Deleted!!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+    @if (ViewBag.UpdateMsg)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Book Successfully Updated!!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
 </div>
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Author</th>
+                <th>Description</th>
+                <th>Pages</th>
+                <th>Quantity</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Name</td>
+                    <td>@item.Author</td>
+                    <td>@item.Description</td>
+                    <td>@item.Pages</td>
+                    <td>@item.Quantity</td>
+                    <td><a class="btn btn-info" asp-controller="Book" asp-action="UpdateBook" asp-route-id="@item.Id" >Update</a></td>
+                    <td><a class="btn btn-info" asp-controller="Book" asp-action="DeleteBook" asp-route-id="@item.Id" >Delete</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        </div>
 

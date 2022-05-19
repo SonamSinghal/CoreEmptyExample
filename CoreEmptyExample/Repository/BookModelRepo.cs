@@ -1,4 +1,5 @@
 ﻿using CoreEmptyExample.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +9,37 @@ namespace CoreEmptyExample.Repository
 {
     public class BookModelRepo
     {
+        private readonly BookModelContext _connection;
 
-        static readonly BookModel[] Books =
+        public BookModelRepo(BookModelContext context)
         {
-            
-        };
-
-        //private readonly BookModelContext _connection;
-
-
-
-        public List<BookModel> GetAllBooks()
-        {
-            return DataSource();
-            //return _connection.BookModel.ToList();
+            _connection = context;
         }
 
-        //public void InsertBook(BookModel book)
-        //{
 
-        //}
+        public async Task<List<BookModel>> GetAllBooks()
+        {
+            var data = await _connection.BookModel.ToListAsync();
+            return data;
+        }
+
+        public async Task<bool> InsertBook(BookModel model)
+        {
+            var book = new BookModel()
+            {
+                Name = model.Name,
+                Author = model.Author,
+                Description = model.Description,
+                Pages = model.Pages,
+                Quantity = model.Quantity,
+                CreatedOn = DateTime.Now,
+                BookUpdatedOn = DateTime.Now,
+                QuantityUpdatedOn = DateTime.Now,
+            };
+            await _connection.BookModel.AddAsync(book);
+            await _connection.SaveChangesAsync();
+            return true;
+        }
 
         //public BookModel SearchBook(int id)
         //{
@@ -37,33 +49,35 @@ namespace CoreEmptyExample.Repository
         //    return book;
         //}
 
-        //public void DeleteBook(int id)
-        //{
-
-        //}
-
-        //public BookModel UpdateBook(int id)
-        //{
-
-        //}
-        
-
-        private List<BookModel> DataSource()
+        public bool DeleteBook(int id)
         {
-            return new List<BookModel>
-            {
-                new BookModel {Id=1, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=2, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=3, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=4, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=5, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=6, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=7, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=8, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=9, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            new BookModel {Id=10, Name="MVC", Author="Sonam", Description="This is Description", Pages=100, Quantity=100 },
-            };
+            var book = _connection.BookModel.FirstOrDefault(x => x.Id == id);
+            _connection.BookModel.Remove(book);
+            _connection.SaveChangesAsync();
+            return true;
         }
 
+        public async Task<BookModel> GetBook(int id)
+        {
+            var book = await _connection.BookModel.FirstOrDefaultAsync(x => x.Id == id);
+            return book;
+        }
+
+        public async Task<bool> UpdateBook(int id, BookModel model)
+        {
+            var book = _connection.BookModel.FirstOrDefault(x => x.Id == id);
+            if (book != null)
+            {
+                book.Name = model.Name;
+                book.Author = model.Author;
+                book.Description = model.Description;
+                book.Pages = model.Pages;
+                book.BookUpdatedOn = DateTime.Now;
+
+                await _connection.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

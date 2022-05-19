@@ -12,9 +12,9 @@ namespace CoreEmptyExample
 
         private readonly BookModelRepo _repo;
 
-        public HomeController()
+        public HomeController(BookModelRepo repo)
         {
-            _repo = new BookModelRepo();
+            _repo = repo;
         }
 
         public ActionResult Index()

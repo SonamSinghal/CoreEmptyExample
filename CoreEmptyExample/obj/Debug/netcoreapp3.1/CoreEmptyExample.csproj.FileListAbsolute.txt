@@ -414,3 +414,5 @@ C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Home\AboutUs.cshtml.g.cs
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Home\ContactUs.cshtml.g.cs
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Book\GetAllBooks.cshtml.g.cs
+C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Book\InsertBook.cshtml.g.cs
+C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Book\UpdateBook.cshtml.g.cs
