@@ -33,7 +33,7 @@ namespace CoreEmptyExample
 #if DEBUG
             services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(options=> 
             {
-                options.HtmlHelperOptions.ClientValidationEnabled = true;//Disable client side validation in debug mode
+                options.HtmlHelperOptions.ClientValidationEnabled = false;//Disable client side validation in debug mode
             });
 #endif
 

@@ -54,7 +54,8 @@ namespace CoreEmptyExample
                 //    book.CoverPhoto.CopyTo(new FileStream(ServerFolder, FileMode.Create));
                 //}
                 _repo.InsertBook(book);
-                return RedirectToAction(nameof(GetAllBooks))/* new { createMsg = true })*/;
+                //return RedirectToAction(nameof(GetAllBooks))/* new { createMsg = true })*/;
+                return Json(new { redirectToUrl = Url.Action("GetAllBooks", "Book") });
             }
 
                 ModelState.AddModelError("", "Invalid Input!!");
