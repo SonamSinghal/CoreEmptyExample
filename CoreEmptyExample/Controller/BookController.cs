@@ -1,8 +1,11 @@
 ﻿using CoreEmptyExample.Model;
 using CoreEmptyExample.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,19 +14,22 @@ namespace CoreEmptyExample
     public class BookController : Controller
     {
         private readonly BookModelRepo _repo;
+        private readonly IWebHostEnvironment _env;
 
-        public BookController(BookModelRepo repo)
+
+        public BookController(BookModelRepo repo, IWebHostEnvironment env)
         {
             _repo = repo;
+            _env = env;
         }
 
-        public async Task<ActionResult> GetAllBooks(bool? createMsg=false, bool? deleteMsg=false, bool? updateMsg=false)
+        public ActionResult GetAllBooks(bool? createMsg=false, bool? deleteMsg=false, bool? updateMsg=false)
         {
             ViewBag.CreateMsg = createMsg;
             ViewBag.DeleteMsg = deleteMsg;
             ViewBag.UpdateMsg = updateMsg;
 
-            List<BookModel> data = await _repo.GetAllBooks();
+            List<BookModel> data = _repo.GetAllBooks();
             
             return View(data);
         }
@@ -34,23 +40,28 @@ namespace CoreEmptyExample
         }
 
         [HttpPost]
-        public async Task<ActionResult> InsertBook(BookModel book)
-        {
+        public ActionResult InsertBook(BookModel book)
+            {
             
             if (ModelState.IsValid)
             {
-                var success = await _repo.InsertBook(book);
-                if (success)
-                {
-                    return RedirectToAction(nameof(GetAllBooks), new { createMsg = true });
-                }
+                //if (book.CoverPhoto != null)
+                //{
+                //    string Folder = "BookImages/cover";
+                //    Folder += Guid.NewGuid().ToString() + book.CoverPhoto.FileName;
+                //    string ServerFolder = Path.Combine(_env.WebRootPath, Folder);
+                //    book.CoverImageUrl = "/"+Folder;
+                //    book.CoverPhoto.CopyTo(new FileStream(ServerFolder, FileMode.Create));
+                //}
+                _repo.InsertBook(book);
+                return RedirectToAction(nameof(GetAllBooks))/* new { createMsg = true })*/;
             }
 
-            ModelState.AddModelError("", "Invalid Input!!");
-            return View();
+                ModelState.AddModelError("", "Invalid Input!!");
+                return View();
         }
 
-        public ActionResult DeleteBook(int id)
+        public ActionResult DeleteBook(Guid id)
         {
             var success = _repo.DeleteBook(id);
             if (success)
@@ -60,14 +71,14 @@ namespace CoreEmptyExample
             return Redirect("GetAllBooks");
         }
 
-        public async Task<ActionResult> UpdateBook(int id)
+        public async Task<ActionResult> UpdateBook(Guid id)
         {
             var book = await _repo.GetBook(id);
             return View(book);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateBook(int id, BookModel book)
+        public async Task<ActionResult> UpdateBook(Guid id, BookModel book)
         {
             
                 var success = await _repo.UpdateBook(id, book);

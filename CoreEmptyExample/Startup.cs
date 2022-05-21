@@ -31,7 +31,10 @@ namespace CoreEmptyExample
 
             //FOR RUNNING RAZOR PAGES AFTER CHANGING WITHOUT REBUILDING THE PROJECT
 #if DEBUG
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages().AddRazorRuntimeCompilation().AddViewOptions(options=> 
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = true;//Disable client side validation in debug mode
+            });
 #endif
 
             services.AddScoped<BookModelRepo, BookModelRepo>();

@@ -17,13 +17,13 @@ namespace CoreEmptyExample.Repository
         }
 
 
-        public async Task<List<BookModel>> GetAllBooks()
+        public List<BookModel> GetAllBooks()
         {
-            var data = await _connection.BookModel.ToListAsync();
+            var data = _connection.BookModel.ToList();
             return data;
         }
 
-        public async Task<bool> InsertBook(BookModel model)
+        public void InsertBook(BookModel model)
         {
             var book = new BookModel()
             {
@@ -35,10 +35,11 @@ namespace CoreEmptyExample.Repository
                 CreatedOn = DateTime.Now,
                 BookUpdatedOn = DateTime.Now,
                 QuantityUpdatedOn = DateTime.Now,
+                //CoverImageUrl = model.CoverImageUrl
             };
-            await _connection.BookModel.AddAsync(book);
-            await _connection.SaveChangesAsync();
-            return true;
+
+             _connection.BookModel.Add(book);
+             _connection.SaveChanges();
         }
 
         //public BookModel SearchBook(int id)
@@ -49,23 +50,23 @@ namespace CoreEmptyExample.Repository
         //    return book;
         //}
 
-        public bool DeleteBook(int id)
+        public bool DeleteBook(Guid id)
         {
-            var book = _connection.BookModel.FirstOrDefault(x => x.Id == id);
+            var book = _connection.BookModel.FirstOrDefault(x => x.Id.ToString() == id.ToString());
             _connection.BookModel.Remove(book);
-            _connection.SaveChangesAsync();
+            _connection.SaveChanges();
             return true;
         }
 
-        public async Task<BookModel> GetBook(int id)
+        public async Task<BookModel> GetBook(Guid id)
         {
-            var book = await _connection.BookModel.FirstOrDefaultAsync(x => x.Id == id);
+            var book = await _connection.BookModel.FirstOrDefaultAsync(x => x.Id.ToString() == id.ToString());
             return book;
         }
 
-        public async Task<bool> UpdateBook(int id, BookModel model)
+        public async Task<bool> UpdateBook(Guid id, BookModel model)
         {
-            var book = _connection.BookModel.FirstOrDefault(x => x.Id == id);
+            var book = _connection.BookModel.FirstOrDefault(x => x.Id.ToString() == id.ToString());
             if (book != null)
             {
                 book.Name = model.Name;
