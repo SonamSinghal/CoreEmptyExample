@@ -13,11 +13,11 @@ namespace CoreEmptyExample
 {
     public class BookController : Controller
     {
-        private readonly BookModelRepo _repo;
+        private readonly IBookModelRepo _repo;
         private readonly IWebHostEnvironment _env;
 
 
-        public BookController(BookModelRepo repo, IWebHostEnvironment env)
+        public BookController(IBookModelRepo repo, IWebHostEnvironment env)
         {
             _repo = repo;
             _env = env;
@@ -45,21 +45,21 @@ namespace CoreEmptyExample
             
             if (ModelState.IsValid)
             {
-                //if (book.CoverPhoto != null)
-                //{
-                //    string Folder = "BookImages/cover";
-                //    Folder += Guid.NewGuid().ToString() + book.CoverPhoto.FileName;
-                //    string ServerFolder = Path.Combine(_env.WebRootPath, Folder);
-                //    book.CoverImageUrl = "/"+Folder;
-                //    book.CoverPhoto.CopyTo(new FileStream(ServerFolder, FileMode.Create));
-                //}
+                if (book.CoverPhoto != null)
+                {
+                    string Folder = "BookImages/cover";
+                    Folder += Guid.NewGuid().ToString() + book.CoverPhoto.FileName;
+                    string ServerFolder = Path.Combine(_env.WebRootPath, Folder);
+                    book.CoverImageUrl = "/" + Folder;
+                    book.CoverPhoto.CopyTo(new FileStream(ServerFolder, FileMode.Create));
+                }
                 _repo.InsertBook(book);
-                //return RedirectToAction(nameof(GetAllBooks))/* new { createMsg = true })*/;
-                return Json(new { redirectToUrl = Url.Action("GetAllBooks", "Book") });
+                //AJAX_UNOBTRUSIVE WAS GIVNG A PROBLEM SO...
+                //return RedirectToAction(nameof(GetAllBooks)), new { createMsg = true });
+                return base.Json(new { redirectToUrl = Url.Action("GetAllBooks", "Book")+ "?createMsg=true" });
             }
-
-                ModelState.AddModelError("", "Invalid Input!!");
-                return View();
+                //ModelState.AddModelError("", "Invalid Input!!");
+                return View(nameof(InsertBook));
         }
 
         public ActionResult DeleteBook(Guid id)
@@ -72,22 +72,21 @@ namespace CoreEmptyExample
             return Redirect("GetAllBooks");
         }
 
-        public async Task<ActionResult> UpdateBook(Guid id)
+        public ActionResult UpdateBook(Guid id)
         {
-            var book = await _repo.GetBook(id);
+            var book = _repo.GetBook(id);
             return View(book);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateBook(Guid id, BookModel book)
+        public ActionResult UpdateBook(Guid id, BookModel book)
         {
-            
-                var success = await _repo.UpdateBook(id, book);
-                if (success)
-                {
-                    return RedirectToAction(nameof(GetAllBooks), new { updateMsg = true });
-                }
-            
+            if (ModelState.IsValid)
+            {
+                var success = _repo.UpdateBook(id, book);
+                if(success)
+                    return base.Json(new { redirectToUrl = Url.Action("GetAllBooks", "Book") + "?updateMsg=true" });
+            }
 
             ModelState.AddModelError("", "Invalid Inputs!");
             return View();

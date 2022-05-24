@@ -4,17 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreEmptyExample
 {
     public class HomeController : Controller
     {
 
-        private readonly BookModelRepo _repo;
+        private readonly IBookModelRepo _repo;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(BookModelRepo repo)
+        public HomeController(IBookModelRepo repo, IConfiguration configuration)
         {
+
             _repo = repo;
+            _configuration = configuration;
         }
 
         public ActionResult Index()

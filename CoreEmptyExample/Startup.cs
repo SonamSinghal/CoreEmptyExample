@@ -11,20 +11,32 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreEmptyExample.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace CoreEmptyExample
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //FOR DATABASE CONNECTION
-            services.AddDbContext<BookModelContext>(
-                //options => options.UseSqlServer("Server=PG02R1PW;Database=BookStore;Integrated Security=true;")
-                );
+            //FOR DATABASE CONNECTION HARDCODED
+            //services.AddDbContext<BookModelContext>(
+            //    //options => options.UseSqlServer("Server=PG02R1PW;Database=BookStore;Integrated Security=true;")
+            //    );
+
+            //FOR DATABASE CONNECTION FROM appsettings.json
+            services.AddDbContext<BookModelContext>(options=>
+            options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
             //FOR USING MVC
             services.AddControllersWithViews();
@@ -37,7 +49,8 @@ namespace CoreEmptyExample
             });
 #endif
 
-            services.AddScoped<BookModelRepo, BookModelRepo>();
+            services.AddScoped<IBookModelRepo, BookModelRepo>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

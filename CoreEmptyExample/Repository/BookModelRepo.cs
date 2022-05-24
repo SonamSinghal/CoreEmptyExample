@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoreEmptyExample.Repository
 {
-    public class BookModelRepo
+    public class BookModelRepo : IBookModelRepo
     {
         private readonly BookModelContext _connection;
 
@@ -35,11 +35,11 @@ namespace CoreEmptyExample.Repository
                 CreatedOn = DateTime.Now,
                 BookUpdatedOn = DateTime.Now,
                 QuantityUpdatedOn = DateTime.Now,
-                //CoverImageUrl = model.CoverImageUrl
+                CoverImageUrl = model.CoverImageUrl
             };
 
-             _connection.BookModel.Add(book);
-             _connection.SaveChanges();
+            _connection.BookModel.Add(book);
+            _connection.SaveChanges();
         }
 
         //public BookModel SearchBook(int id)
@@ -58,13 +58,13 @@ namespace CoreEmptyExample.Repository
             return true;
         }
 
-        public async Task<BookModel> GetBook(Guid id)
+        public BookModel GetBook(Guid id)
         {
-            var book = await _connection.BookModel.FirstOrDefaultAsync(x => x.Id.ToString() == id.ToString());
+            var book = _connection.BookModel.FirstOrDefault(x => x.Id.ToString() == id.ToString());
             return book;
         }
 
-        public async Task<bool> UpdateBook(Guid id, BookModel model)
+        public bool UpdateBook(Guid id, BookModel model)
         {
             var book = _connection.BookModel.FirstOrDefault(x => x.Id.ToString() == id.ToString());
             if (book != null)
@@ -75,7 +75,7 @@ namespace CoreEmptyExample.Repository
                 book.Pages = model.Pages;
                 book.BookUpdatedOn = DateTime.Now;
 
-                await _connection.SaveChangesAsync();
+                _connection.SaveChanges();
                 return true;
             }
             return false;
