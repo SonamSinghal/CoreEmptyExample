@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "jtBJHuykKOBfeZVGjMexXod4/5s5W5qnJEUkWPin3kxLvVRj9Xo4q2V5GFgUuw4tXqLVFKlvWl1cM5iFJ7/uog==",
+  "dgSpecHash": "9TRwWeySk/LnzxOExYHXvDRMjck0j/5UEtkR2kjj50j59GJUyypJ5GQezuVAwycKoIme7XbxwZTbsiy6+1/MRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Unthinkable-lap-0302\\source\\repos\\CoreEmptyExample\\CoreEmptyExample\\CoreEmptyExample.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.0.0\\microsoft.aspnetcore.cryptography.internal.3.0.0.nupkg.sha512",
+    "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.0.0\\microsoft.aspnetcore.cryptography.keyderivation.3.0.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.0.0\\microsoft.aspnetcore.identity.entityframeworkcore.3.0.0.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\3.1.0\\microsoft.aspnetcore.mvc.razor.extensions.3.1.0.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\3.1.0\\microsoft.aspnetcore.mvc.razor.runtimecompilation.3.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
@@ -33,6 +36,8 @@
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.0\\microsoft.extensions.dependencyinjection.3.1.0.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.0\\microsoft.extensions.dependencyinjection.abstractions.3.1.0.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.dependencymodel\\3.1.0\\microsoft.extensions.dependencymodel.3.1.0.nupkg.sha512",
+    "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.identity.core\\3.0.0\\microsoft.extensions.identity.core.3.0.0.nupkg.sha512",
+    "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.0.0\\microsoft.extensions.identity.stores.3.0.0.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.logging\\3.0.1\\microsoft.extensions.logging.3.0.1.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.0.1\\microsoft.extensions.logging.abstractions.3.0.1.nupkg.sha512",
     "C:\\Users\\Unthinkable-lap-0302\\.nuget\\packages\\microsoft.extensions.options\\3.0.1\\microsoft.extensions.options.3.0.1.nupkg.sha512",

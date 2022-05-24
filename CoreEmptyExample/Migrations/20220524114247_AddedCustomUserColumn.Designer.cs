@@ -4,14 +4,16 @@ using CoreEmptyExample;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoreEmptyExample.Migrations
 {
     [DbContext(typeof(BookModelContext))]
-    partial class BookModelContextModelSnapshot : ModelSnapshot
+    [Migration("20220524114247_AddedCustomUserColumn")]
+    partial class AddedCustomUserColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace CoreEmptyExample.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Age")
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -105,7 +107,7 @@ namespace CoreEmptyExample.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("Phone")
+                    b.Property<long>("Phone")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")

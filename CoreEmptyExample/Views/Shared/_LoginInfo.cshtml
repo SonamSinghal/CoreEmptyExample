@@ -1,0 +1,26 @@
+﻿@using CoreEmptyExample.Model
+@inject Microsoft.AspNetCore.Identity.SignInManager<UserModel> _signIn
+
+
+
+@if (_signIn.IsSignedIn(User)) 
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" >
+            Hello @User.Identity.Name
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a asp-controller="Account" asp-action="Logout">Logout</a>
+        </div>
+    </li>
+}
+
+else 
+{ 
+    <li class="nav-item">
+        <a class="btn btn-outline-info" asp-controller="Account" asp-action="LogIn">Login</a>
+        <a class="btn btn-info" asp-controller="Account" asp-action="SignUp">Register</a>
+    </li>
+}
+
+

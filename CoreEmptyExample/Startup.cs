@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoreEmptyExample.Repository;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using CoreEmptyExample.Model;
 
 namespace CoreEmptyExample
 {
@@ -28,6 +30,9 @@ namespace CoreEmptyExample
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddIdentity<UserModel, IdentityRole>()
+                .AddEntityFrameworkStores<BookModelContext>();
 
             //FOR DATABASE CONNECTION HARDCODED
             //services.AddDbContext<BookModelContext>(
@@ -50,6 +55,7 @@ namespace CoreEmptyExample
 #endif
 
             services.AddScoped<IBookModelRepo, BookModelRepo>();
+            services.AddScoped<IAccountRepo, AccountRepo>();
             
         }
 
@@ -70,6 +76,8 @@ namespace CoreEmptyExample
             //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
             //    RequestPath = "/MyStaticFiles"
             //});
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
