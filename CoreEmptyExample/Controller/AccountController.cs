@@ -1,5 +1,6 @@
 ﻿using CoreEmptyExample.Model;
 using CoreEmptyExample.Repository;
+using CoreEmptyExample.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace CoreEmptyExample
     public class AccountController : Controller
     {
         private readonly IAccountRepo _accountRepo;
+        private readonly IUserService _userService;
 
-        public AccountController(IAccountRepo accountRepo)
+        public AccountController(IAccountRepo accountRepo, IUserService userService)
         {
             _accountRepo = accountRepo;
+            _userService = userService;
         }
 
         public IActionResult SignUp()
@@ -37,7 +40,7 @@ namespace CoreEmptyExample
                 }
                 else
                 {
-                    ModelState.Clear();
+                    return RedirectToAction("LogIn");
                 }
             }
             return View();
@@ -50,13 +53,18 @@ namespace CoreEmptyExample
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn(LoginModel user)
+        public async Task<IActionResult> LogIn(LoginModel user, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
                 var success = await _accountRepo.LogIn(user);
                 if (success.Succeeded)
                 {
+                    if (!String.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return LocalRedirect(ReturnUrl);
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -72,6 +80,36 @@ namespace CoreEmptyExample
         {
             await _accountRepo.LogOut();
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel changePassword)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _accountRepo.ChangePassword(changePassword);
+                if (success.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    foreach(var error in success.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return View();
+                }
+            }
+
+            return View();
         }
 
     }

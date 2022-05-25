@@ -1,16 +1,19 @@
 ﻿@using CoreEmptyExample.Model
+
 @inject Microsoft.AspNetCore.Identity.SignInManager<UserModel> _signIn
 
 
 
 @if (_signIn.IsSignedIn(User)) 
 {
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown" >
-            Hello @User.Identity.Name
+    <li class="nav-item dropdown text-dark">
+        <a class="nav-link dropdown-toggle" id="navbar-dropdown" role="button" data-toggle="dropdown">
+            Hello @User.FindFirst("UserFirstName")
+            @*@(User.FindFirst("UserFirstName").Value)+ " " + User.FindFirst("UserLastName").Value )*@
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a asp-controller="Account" asp-action="Logout">Logout</a>
+        <div class="dropdown-menu text-center bg-dark" aria-labelledby="navbarDropdown" >
+            <a class="text-center text-white" asp-controller="Account" asp-action="Logout">Logout</a> <br />
+            <a class="text-center text-white" asp-controller="Account" asp-action="ChangePassword">Change Password</a>
         </div>
     </li>
 }
@@ -18,9 +21,11 @@
 else 
 { 
     <li class="nav-item">
-        <a class="btn btn-outline-info" asp-controller="Account" asp-action="LogIn">Login</a>
+        <a class="btn btn-outline-info" asp-controller="Account" asp-action="LogIn" asp-route-returnUrl="@Context.Request.Path">Login</a>
         <a class="btn btn-info" asp-controller="Account" asp-action="SignUp">Register</a>
     </li>
+
+
 }
 
 

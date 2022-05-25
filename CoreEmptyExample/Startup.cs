@@ -14,6 +14,7 @@ using CoreEmptyExample.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using CoreEmptyExample.Model;
+using CoreEmptyExample.Service;
 
 namespace CoreEmptyExample
 {
@@ -43,6 +44,12 @@ namespace CoreEmptyExample
             services.AddDbContext<BookModelContext>(options=>
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
 
+            //REDIRECT TO LOGIN PAGE IF NOT LOGGED IN
+            services.ConfigureApplicationCookie(configure =>
+            {
+                configure.LoginPath = _configuration["Application: LoginPath"];
+            });
+
             //FOR USING MVC
             services.AddControllersWithViews();
 
@@ -56,6 +63,18 @@ namespace CoreEmptyExample
 
             services.AddScoped<IBookModelRepo, BookModelRepo>();
             services.AddScoped<IAccountRepo, AccountRepo>();
+            services.AddScoped<IUserClaimsPrincipalFactory<UserModel>, UserClaimsPrincipalFactory<UserModel>>();
+            services.AddScoped<IUserService, UserService>();
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequireUppercase = false;
+            //    AND MANY MORE...
+
+            //});
+
+            services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
             
         }
 
@@ -77,13 +96,21 @@ namespace CoreEmptyExample
             //    RequestPath = "/MyStaticFiles"
             //});
 
-            app.UseAuthentication();
+            
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapControllerRoute(
+                    name: "MyArea",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
             });
         }
     }

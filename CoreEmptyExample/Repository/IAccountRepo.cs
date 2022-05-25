@@ -9,5 +9,7 @@ namespace CoreEmptyExample.Repository
         Task<IdentityResult> CreateUser(SignUpUserModel user);
         Task<SignInResult> LogIn(LoginModel user);
         Task LogOut();
+        Task<IdentityResult> ChangePassword(ChangePasswordModel model);
+
     }
 }

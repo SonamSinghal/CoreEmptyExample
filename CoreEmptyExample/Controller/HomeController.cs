@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEmptyExample
 {
@@ -31,6 +32,7 @@ namespace CoreEmptyExample
             return View();
         }
 
+        [Authorize(Roles ="Admin")]
         public ActionResult ContactUs()
         {
             return View();

@@ -23,6 +23,7 @@ namespace CoreEmptyExample
             _env = env;
         }
 
+        [Authorize]
         public ActionResult GetAllBooks(bool? createMsg=false, bool? deleteMsg=false, bool? updateMsg=false)
         {
             ViewBag.CreateMsg = createMsg;
@@ -34,11 +35,13 @@ namespace CoreEmptyExample
             return View(data);
         }
 
+        [Authorize]
         public ActionResult InsertBook()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult InsertBook(BookModel book)
             {
@@ -54,6 +57,7 @@ namespace CoreEmptyExample
                     book.CoverPhoto.CopyTo(new FileStream(ServerFolder, FileMode.Create));
                 }
                 _repo.InsertBook(book);
+
                 //AJAX_UNOBTRUSIVE WAS GIVNG A PROBLEM SO...
                 //return RedirectToAction(nameof(GetAllBooks)), new { createMsg = true });
                 return base.Json(new { redirectToUrl = Url.Action("GetAllBooks", "Book")+ "?createMsg=true" });
