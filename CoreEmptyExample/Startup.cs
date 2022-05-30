@@ -33,7 +33,7 @@ namespace CoreEmptyExample
         {
 
             services.AddIdentity<UserModel, IdentityRole>()
-                .AddEntityFrameworkStores<BookModelContext>();
+                .AddEntityFrameworkStores<BookModelContext>().AddDefaultTokenProviders();
 
             //FOR DATABASE CONNECTION HARDCODED
             //services.AddDbContext<BookModelContext>(
@@ -65,14 +65,17 @@ namespace CoreEmptyExample
             services.AddScoped<IAccountRepo, AccountRepo>();
             services.AddScoped<IUserClaimsPrincipalFactory<UserModel>, UserClaimsPrincipalFactory<UserModel>>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
 
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequireUppercase = false;
-            //    AND MANY MORE...
+            services.Configure<IdentityOptions>(options =>
+            {
+                //options.Password.RequireDigit = false;
+                //options.Password.RequireUppercase = false;
+                //AND MANY MORE...
 
-            //});
+                options.SignIn.RequireConfirmedEmail = true; ;
+
+            });
 
             services.Configure<SMTPConfigModel>(_configuration.GetSection("SMTPConfig"));
             

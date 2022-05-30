@@ -422,3 +422,5 @@ C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\bin
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Account\ChangePassword.cshtml.g.cs
+C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Account\ConfirmationEmail.cshtml.g.cs
+C:\Users\Unthinkable-lap-0302\source\repos\CoreEmptyExample\CoreEmptyExample\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPassword.cshtml.g.cs

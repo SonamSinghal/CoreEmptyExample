@@ -13,5 +13,6 @@ namespace CoreEmptyExample.Model
         public string LastName { get; set; }
         public int? Age { get; set; }
         public long? Phone { get; set; }
+
     }
 }

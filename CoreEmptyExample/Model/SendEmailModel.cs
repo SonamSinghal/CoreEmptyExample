@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace CoreEmptyExample.Model
 {
-    public class SendEmail
+    public class SendEmailModel
     {
         public List<string> SendTo { get; set; }
 
         public string Subject { get; set; }
 
         public string Body { get; set; }
+
+        public List<KeyValuePair<string, string>> PlaceHolders { get; set; }
     }
 }
